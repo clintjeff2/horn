@@ -2,6 +2,7 @@ import './style.css';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 // Setup
 
@@ -20,7 +21,7 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(0);
+camera.position.setZ(30);
 camera.position.setX(30);
 
 renderer.render(scene, camera);
@@ -33,7 +34,7 @@ const torus = new THREE.Mesh(geometry, material);
 
 // Lights
 
-const pointLight = new THREE.PointLight(0xffffff);
+const pointLight = new THREE.PointLight(0xffffff, 200);
 pointLight.position.set(5, 5, 5);
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
@@ -42,11 +43,15 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 // Helpers
 const loader = new GLTFLoader();
+
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('path_to_draco_decoder/');
+
 loader.load(
-	'/bakweriFlute.gltf',
+	'/bakweriHorn-Seeva.gltf',
 	(gltf) => {
 		const model = gltf.scene;
-		model.scale.set(10, 10, 10);
+		model.scale.set(5, 5, 5);
 		model.name = 'Drum';
 		scene.add(model);
 	},
